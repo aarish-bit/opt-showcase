@@ -1,0 +1,39 @@
+.designers {
+  text-align: center;
+  color: #5A5555;
+
+  .designer-content {
+    margin-top: 60px;
+  }
+
+  .designer-filter {
+    text-align: left;
+  }
+
+  .designer-filter-options {
+    margin-top: 15px;
+  }
+
+  span {
+    font-size: 18px;
+    padding: 8px 10px;
+    color: #333;
+  }
+
+  .viewall{
+    font-size: 15px;
+    color: black;
+  }
+}
+
+.filtered-names{
+  display: flex;
+  flex-direction: column;
+ text-align: left;
+ .filtered-names-head{
+   font-size: 30px;
+   border-bottom: 1px solid #CCCCCC;
+   padding: 15px 0px;
+    margin-top: 10px;
+ } 
+}
