@@ -1,0 +1,54 @@
+.ViewAllContent {
+  .designers-header-filters {
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    padding: 10px 1px;
+  }
+
+  button {
+    margin-left: 25px;
+
+    &:hover {
+      background-color: #EFEFEF
+    }
+  }
+
+  select {
+    padding: 5px 15px;
+    background: transparent;
+    margin-left: 10px;
+  }
+
+  .add-to-wishlist {
+    margin-left: 175px;
+    font-size: 13px;
+    border: 1px solid #858585;
+  }
+}
+
+.designers-viewall-content{
+  display: flex;
+  flex-wrap: wrap;
+  .list-view{
+    padding: 5px 5px;
+    img{
+      width: 35%;
+      height: 204px;
+    }
+  }
+  .grid-view-large{
+    padding: 15px 15px;
+    img{
+      width: 94%;
+      height: 285px;
+    }   
+  }
+  .grid-view-small{
+    padding: 15px 15px;
+    img{
+      height: 235px;
+      width: 285px;
+    }   
+  }
+}
+

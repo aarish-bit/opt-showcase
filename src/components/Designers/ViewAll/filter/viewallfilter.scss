@@ -1,0 +1,31 @@
+.ViewAllFilters {
+  display: flex;
+  flex-direction: column;
+
+  .reset-filter {
+    color: #858585;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    &:hover {
+      background-color: #EFEFEF
+    }
+  }
+
+  .shop-by-keyword {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+
+    .price-block {
+      width: 38px;
+      margin-left: 10px;
+    }
+
+    .btn {
+      padding: 2px 5px;
+      background-color: #858585;
+      color: black;
+    }
+  }
+}

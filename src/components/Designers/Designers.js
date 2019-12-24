@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./designers.scss";
 import { NavLink } from "react-router-dom";
+import _ from 'lodash'
 
 export default function Designers() {
   const [hasError, setErrors] = useState(false);
   const [designerFilter, setDesignFilter] = useState([]);
+  // const [namesFilter, setNamesFilter] = useState([]);
+
 
 
   async function fetchData(i) {
@@ -16,25 +19,16 @@ export default function Designers() {
   }
 
   // console.log(designerFilter, 'm')
-  designerFilter.sort((a,b) => (a.name > b.name) ? 1 : -1)
-  // console.log(sortedDesignerFilter, 'vvv')
+  designerFilter.sort((a,b) => (a.name > b.name) ? 1 : -1);
 
-  // let firstLetter = sortedDesignerFilter.map((item) => {
-  //   console.log(item.name.charAt(0), 'item')
-  //   item.name.charAt(0);
-  // });
-  // console.log(firstLetter, 'lett')
+  var namesFilter = designerFilter.map((names)=> { return names.name})
+  console.log(namesFilter, 'vvv')
 
-  // function scroll(){
-  //   window.scrollTo(0,500);
-  // }
+  var firstLetter = namesFilter.map((letter) => { return letter.charAt(0) });
+  console.log(firstLetter, 'kkk')
 
-  // function onlyUnique(value, index, self) { 
-  //   return self.indexOf(value) === index;
-  // }
-  
-  // designerFilter.filter(onlyUnique())
-
+  var filterletter = _.uniq(firstLetter);
+  console.log(filterletter, 'fff')
   
   useEffect(() => {
     fetchData()
@@ -58,7 +52,7 @@ export default function Designers() {
           </div>
           <div className="designer-filter-options">
             <span onClick={(e) => { window.scrollTo(0,700)}}>T</span>
-            <NavLink to="#" className="viewall">VIEW ALL</NavLink>
+            <NavLink to="/designers/ViewAll" className="viewall">VIEW ALL</NavLink>
           </div>
         </div>
         <div className="col-md-8 col-xs-12">
