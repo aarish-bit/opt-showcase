@@ -1,0 +1,48 @@
+.ViewAllFilters {
+  display: flex;
+  flex-direction: column;
+
+  .reset-filter {
+    color: #858585;
+    font-size: 14px;
+    padding: 10px 20px;
+    &:hover{background-color: #EFEFEF}
+  }
+
+  .shop-by-keyword {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    .price-block{
+      width: 38px;
+      margin-left: 10px;
+    }
+    .btn{
+      padding: 2px 5px;
+      background-color: #858585;
+      color: black;
+    }
+  }
+}
+
+.ViewAllContent{
+  .designers-header-filters{
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    padding: 10px 1px;
+  }
+  button{
+    margin-left: 25px;
+    &:hover{background-color:#EFEFEF }
+  }
+  select{
+    padding: 5px 15px;
+    background: transparent;
+    margin-left: 10px;
+  }
+  .add-to-wishlist{
+    margin-left: 175px;
+    font-size: 13px;
+    border: 1px solid #858585;
+  }
+}
