@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./viewallcontent.scss";
+import {NavLink} from 'react-router-dom'
 
 export default function ViewAllContent() {
   var [mainClass, setMainClass] = useState("col-md-4 grid-view-small");
@@ -197,19 +198,19 @@ export default function ViewAllContent() {
       </div>
       <ul class="pagination">
         <li>
-          <a href="#">1</a>
+          <NavLink to="#">1</NavLink>
         </li>
         <li class="active">
-          <a href="#">2</a>
+          <NavLink to="#">2</NavLink>
         </li>
         <li>
-          <a href="#">3</a>
+          <NavLink to="#">3</NavLink>
         </li>
         <li>
-          <a href="#">4</a>
+          <NavLink to="#">4</NavLink>
         </li>
         <li>
-          <a href="#">5</a>
+          <NavLink to="#">5</NavLink>
         </li>
       </ul>
     </div>

@@ -1,3 +1,44 @@
+date-20-10-19:
+
+1.created react app opt-showcase using npm.
+2.installed dependencies
+    "@fortawesome/fontawesome": "^1.1.8" -> for icons, 
+    "bootstrap": "^4.4.1" - for css components,
+    "lodash": "^4.17.15", - for functionality,
+    "node-sass": "^4.13.0", - for styling, 
+    "react-router-dom": "^5.1.2", - for routing,
+
+2.created homepage -> Homepage.js and homepage.scss.
+3.created navbar with hover-dropdowns -> Toolbar.js and toolbar.scss.
+4.created GIT repositry opt-showcase and pushed code to git using GIT commands
+
+
+
+date-23-10-19 & date-24-10-19:
+
+1.created route for designers page.
+  designers -> Designers.js and designers.scss.
+2.created designers page containing -> Designers.js and designers.scss.
+3.Designers.js contains Designers-filters and designers-content
+
+
+
+
+date-26-10-19 & date-27-10-19:
+
+1.created route for designer's view-all page.
+  designers -> ViewAll.js and ViewAll.scss.
+2.created ViewAll folder inside Designers folder.
+3.ViewAll folders contains 2 folder -> content & filter.
+4.content folders contains 2 folder -> ViewAllContent.js & viewallcontent.scss,
+   it contains the content of View-All.
+
+5.filter folders contains 2 folder -> ViewAllFilters.js & viewallfilter.scss. 
+   it contains the filters of View-All. 
+
+6.created designers page containing -> Designers.js and designers.scss.
+7.Designers.js contains Designers-filters and designers-content
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

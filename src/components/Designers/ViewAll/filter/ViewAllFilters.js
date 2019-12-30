@@ -14,7 +14,7 @@ export default function ViewAllFilters() {
           </button>
         </span>
       </div>
-      <div className="shop-by-price">
+      {/* <div className="shop-by-price">
         <label>SHOP BY PRICE</label>
         <div>
           <span className="">$</span>
@@ -23,7 +23,7 @@ export default function ViewAllFilters() {
           <span><input type="text" className="price-block" /></span>
           <span><button className="btn btn-default">GO</button></span>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

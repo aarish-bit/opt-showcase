@@ -1,7 +1,8 @@
 .ViewAllFilters {
   display: flex;
   flex-direction: column;
-
+  position: sticky;
+  top: 5%;
   .reset-filter {
     color: #858585;
     font-size: 14px;
