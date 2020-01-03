@@ -22,13 +22,13 @@ export default function Designers() {
   designerFilter.sort((a,b) => (a.name > b.name) ? 1 : -1);
 
   var namesFilter = designerFilter.map((names)=> { return names.name})
-  console.log(namesFilter, 'vvv')
+  // console.log(namesFilter, 'vvv')
 
   var firstLetter = namesFilter.map((letter) => { return letter.charAt(0) });
-  console.log(firstLetter, 'kkk')
+  // console.log(firstLetter, 'kkk')
 
   var filterletter = _.uniq(firstLetter);
-  console.log(filterletter, 'fff')
+  // console.log(filterletter, 'fff')
   
   useEffect(() => {
     fetchData()

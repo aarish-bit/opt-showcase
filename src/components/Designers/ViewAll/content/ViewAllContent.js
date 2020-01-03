@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./viewallcontent.scss";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 export default function ViewAllContent() {
   var [mainClass, setMainClass] = useState("col-md-4 grid-view-small");
   const [hasError, setErrors] = useState(false);
   var [viewAllDesignes, setViewAllDesignes] = useState([]);
-  var [sort, setSort] = useState('pricing.retail;asc');
-  var [limit, setLimit] = useState('24');
-
-  
+  var [sort, setSort] = useState("pricing.retail;asc");
+  var [limit, setLimit] = useState("24");
+ 
   async function fetchData(sortBy, Limit, Page) {
-    console.log(sortBy, "sort");
-    let qs = "status=Active"
-    if(sortBy && Limit && Page) qs = qs + "&sort="+sortBy
-    if(Limit) qs = qs + "&limit="+Limit
-    if(Page) qs = qs + "&Page="+Page
-    qs = (sortBy === undefined && Limit === undefined) ? qs+'&sort=pricing.retail;asc&limit=24' : qs;
+    // console.log(sortBy, "sort");
+    let qs = "status=Active";
+    if (sortBy) qs = qs + "&sort=" + sortBy;
+    if (Limit) qs = qs + "&limit=" + Limit;
+    if (Page) qs = qs + "&Page=" + Page;
+    qs = sortBy === undefined && Limit === undefined? qs + "&sort=pricing.retail;asc&limit=24": qs;
 
     const res = await fetch(
-      "https://opt-showcase-api.optcentral.com/products?"+qs
+      "https://opt-showcase-api.optcentral.com/products?" + qs
     );
     res
       .json()
@@ -31,18 +30,18 @@ export default function ViewAllContent() {
     fetchData();
   }, []);
 
-
   function handleSort(e) {
+    setSort(e.target.value)
     sort = e.target.value;
-    fetchData(sort,limit);
+    fetchData(sort, limit);
   }
 
   function handleProductsNum(e) {
+    setLimit(e.target.value)
     limit = e.target.value;
-    console.log(limit, "limit");
-    fetchData(sort,limit);
+    // console.log(limit, "limit");
+    fetchData(sort, limit);
   }
-
 
   var setAlignOrder = "column";
   if (mainClass === "col-md-12 list-view") {
@@ -69,20 +68,8 @@ export default function ViewAllContent() {
     setDesignerPrice = "col-md-2 designers-price";
   }
 
-  var setWishListText = "Wishlist";
-  if (mainClass === "col-md-12 list-view") {
-    setWishListText = "ADD TO WISHLIST";
-  }
-
-  var setOrderText = "Order";
-  if (mainClass === "col-md-12 list-view") {
-    setOrderText = "ORDER";
-  }
-
   var productslength = viewAllDesignes.length;
-  console.log(productslength, 'jjj')
-
-  
+  // console.log(productslength, "jjj");
 
   return (
     <div className="ViewAllContent">
@@ -117,7 +104,9 @@ export default function ViewAllContent() {
         </button>
         <select name="sort" onChange={handleSort}>
           <option value="">Sort</option>
-          <option value="pricing.retail;asc" selected>Price Low to High</option>
+          <option value="pricing.retail;asc" selected>
+            Price Low to High
+          </option>
           <option value="pricing.retail;desc">Price High to Low</option>
           <option value="company.optName;asc">Brands A to Z</option>
           <option value="company.optName;desc">Brands Z to A</option>
@@ -134,7 +123,9 @@ export default function ViewAllContent() {
         </select>
         <select name="limit" onChange={handleProductsNum}>
           <option value="Items per page">Items per page</option>
-          <option value="24" selected>24</option>
+          <option value="24" selected>
+            24
+          </option>
           <option value="48">48</option>
           <option value="72">72</option>
         </select>
@@ -179,18 +170,39 @@ export default function ViewAllContent() {
               </div>
               <div className="viewall-content-functions">
                 <button className="btn btn-default details">
+                  <i className="fas fa-list-alt"></i>
                   MORE DETAILS
                 </button>
                 <span className="grid-hide-line">|</span>
-                <button className="btn btn-default inquire">INQUIRE</button>
+                <button className="btn btn-default inquire">
+                  <i className="fas fa-question"></i>
+                  INQUIRE
+                </button>
                 <span className="grid-hide-line">|</span>
                 <button className="btn btn-default wishlist">
-                  {setWishListText}
+                  <i className="fas fa-heart"></i>
+                  ADD TO WISHLIST
                 </button>
                 <span>|</span>
                 <button className="btn btn-default order">
-                  {setOrderText}
+                  <i className="fas fa-shopping-bag"></i>
+                  ORDER
                 </button>
+              </div>
+              <div className="viewall-content-grid-functions">
+                <span>
+                  <button className="btn btn-default wishlist">
+                    <i className="fas fa-shopping-bag"></i>
+                    <label>ORDER</label>
+                  </button>
+                </span>
+                <span><label className="line-between">|</label></span>
+                <span>
+                  <button className="btn btn-default order">
+                    <i className="fas fa-heart"></i>
+                    <label>WISHLIST</label>
+                  </button>
+                </span>
               </div>
             </div>
           );

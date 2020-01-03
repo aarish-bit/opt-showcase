@@ -2,11 +2,16 @@
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 5%;
+  top: 15%;
+  height: 600px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .reset-filter {
     color: #858585;
     font-size: 14px;
-    padding: 10px 20px;
+    padding: 12px 6px;
 
     &:hover {
       background-color: #EFEFEF
@@ -38,13 +43,40 @@
   }
 
   .shop-by-price{
+    margin-top: 15px;
     span{
-      padding: 10px;
-    font-size: 12px;
-
+      padding: 7px 7px;
+      font-size: 12px;
     }
     .price-block{
-      width: 50px;
+      width: 55px;
+      height: 30px;
     }
+    .btn{
+      border: 2px solid #858585;
+      height: 32px;
+      width: 45px;
+      font-size: 12px;
+    }
+  }
+
+  .accordian{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    .accordian-content{
+      border-bottom: 1px solid #858585;
+      cursor: pointer;
+      margin-bottom: 0px;
+    }
+    .card{
+      border: none;
+      height: 315px;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .card-body{padding: 0}
   }
 }
