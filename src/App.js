@@ -5,11 +5,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import Toolbar from "./components/Toolbar/Toolbar";
 import Routes from "./Routes/Routes";
-import { ProductsProvider } from "./ProductsContext";
+// import ProductList from "./components/ProductList";
+// import { ProductProvider } from "./ProductContext";
 
 function App() {
   return (
-    <ProductsProvider>
       <Router>
         <div className="App">
           <header className="App-header">
@@ -19,11 +19,10 @@ function App() {
             <Toolbar />
           </header>
           <div className="container">
-            <Routes />
+             <Routes />
           </div>
         </div>
       </Router>
-    </ProductsProvider>
   );
 }
 
