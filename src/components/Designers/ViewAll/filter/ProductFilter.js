@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Collapse, CardBody, Card } from "reactstrap";
 import { fetchProducts} from "./../../../../ViewAllAction";
 import "./viewallfilter.scss";
 import _ from "lodash";
 
-export class ProductFilter extends Component {
+class ProductFilter extends React.Component {
   constructor(props) {
     super(props);
     
@@ -17,51 +17,32 @@ export class ProductFilter extends Component {
       isOpen5: false,
       isOpen6: false
     };
+    this.handleShopByBrand = this.handleShopByBrand.bind(this);
+    this.handleShopByCategories = this.handleShopByCategories.bind(this);
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchProducts(this.props.sorted, this.props.limit));
+    this.props.dispatch(fetchProducts());
   }
 
   handleShopByBrand(e) {
-    this.props.dispatch(fetchProducts(e.target.value, this.props.limit));
+    console.log(e.target.value)
+    // this.props.dispatch(fetchProducts(e.target.value, this.props.limit));
   }
 
   handleShopByCategories(e) {
-    this.props.dispatch(fetchProducts(this.props.sorted, e.target.value));
+    console.log(e.target.value)
+    // this.props.dispatch(fetchProducts(this.props.sorted, e.target.value));
   }
 
   render() {
     var { isOpen1, isOpen2, isOpen3, isOpen4, isOpen5, isOpen6 } = this.state;
     const { error, loading, products } = this.props;
 
-    if (error) {
-      return <div>Error! {error.message}</div>;
-    }
-
-    if (loading) {
-      return (
-        <div class="lds-default">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      );
-    }
-
-    var brandsort = products.map(brands => {
+    var brandsort = products.map((brands) => {
       return brands.brand.name;
     });
-    // var brandsort = [... new Set(brandsort)]
+    var brandsorted = [... new Set(brandsort)]
 
     var categorysort = products.map(category => {
       return category.categories[0].name;
@@ -137,10 +118,10 @@ export class ProductFilter extends Component {
           <Collapse isOpen={isOpen1}>
             <Card>
               <CardBody>
-                {brandsort.map((brands, key) => {
+                {brandsorted.map((brands, key) => {
                   return (
                     <div key={brands.id} className="reset-filter">
-                      <span onClick={handleShopByBrand}>{brands}</span>
+                      <span onClick={this.handleShopByBrand}>{brands}</span>
                     </div>
                   );
                 })}
@@ -162,7 +143,7 @@ export class ProductFilter extends Component {
                 {categorysort.map((category, key) => {
                   return (
                     <div className="reset-filter">
-                      <span onChange={handleShopByCategories}>{category}</span>
+                      <span onChange={this.handleShopByCategories}>{category}</span>
                     </div>
                   );
                 })}
