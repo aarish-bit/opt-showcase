@@ -2,59 +2,53 @@ import React from "react";
 import "./viewallcontent.scss";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchProducts} from "./../../../../ViewAllAction";
+import { fetchProducts } from "./../../../../ViewAllAction";
+import _ from "lodash"
 
 class ProductList extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      mainClass: "col-md-4 grid-view-small",
-      setAlignOrder: "column",
-      setHeadDisplays: "row list-header-hidden",
-      setDesignerDetails: "col-md-12 grid-designers-details",
-      setDesignerImage: "col-md-12 grid-designers-details",
-      setDesignerPrice: "col-md-12 grid-designers-details"
-    };
-    this.onChangeSort = this.onChangeSort.bind(this);
-    this.onChangeLimit = this.onChangeLimit.bind(this);
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchProducts(this.props.sorted, this.props.limit));
+    this.props.dispatch(
+      fetchProducts(
+        this.props.sorted,
+        this.props.limit,
+        this.props.searching,
+        this.props.priceMax,
+        this.props.priceMin,
+        this.props.brands
+      )
+    );
   }
-
-  onChangeSort(e) {
-    this.props.dispatch(fetchProducts(e.target.value, this.props.limit));
-  }
-
-  onChangeLimit(e) {
-    this.props.dispatch(fetchProducts(this.props.sorted, e.target.value));
-  }
-  // changeView() {
-  //   var mainClass = this.state;
-  //   this.setState({mainClass:"col-md-12 list-view"})
-  //   if (this.state.mainClass === "col-md-12 list-view") {
-  //     this.setState({
-  //     setAlignOrder: "row",
-  //     setHeadDisplays: "row list-header",
-  //     setDesignerDetails: "col-md-5 list-designers-details",
-  //     setDesignerImage: "col-md-5 list-designers-details",
-  //     setDesignerPrice: "col-md-2 designers-price"
-  //    });
-  //   }
-  // }
 
   render() {
-    const { error, loading, products } = this.props;
-    let {
-      mainClass,
-      setAlignOrder,
-      setHeadDisplays,
-      setDesignerDetails,
-      setDesignerImage,
-      setDesignerPrice
-    } = this.state;
+    const { error, loading, products, mainClass } = this.props;
+    // console.log("products", products)
+    const { searching, priceMin, priceMax, brands, category } = this.props;
+    console.log("brands", brands);
+    var setAlignOrder = "column";
+    var setHeadDisplays = "row list-header-hidden";
+    var setDesignerDetails = "col-md-12 grid-designers-details";
+    var setDesignerImage = "col-md-12 grid-designers-details";
+    var setDesignerPrice = "col-md-12 grid-designers-details";
+    var filterCriteria = "filter-criteria-hide";
+    var searchCriteria = "search-criteria-show";
+    var brandCriteria = "search-criteria-show";
+    var categoryCriteria = "search-criteria-show";
+    var priceCriteria = "search-criteria-show";
+
+    if (this.props.mainClass === "col-md-12 list-view") {
+      setAlignOrder = "row";
+      setHeadDisplays = "row list-header";
+      setDesignerDetails = "col-md-5 list-designers-details";
+      setDesignerImage = "col-md-5 list-designers-details";
+      setDesignerPrice = "col-md-2 designers-price";
+    }
+    if (!_.isEmpty(searching) || !_.isEmpty(priceMin) || !_.isEmpty(priceMax) || !_.isEmpty(brands) || !_.isEmpty(category)) {
+      filterCriteria = "filter-criteria-show";
+    }
 
     if (error) {
       return <div>Error! {error.message}</div>;
@@ -79,93 +73,27 @@ class ProductList extends React.Component {
       );
     }
 
-    // if (this.state.mainClass === "col-md-12 list-view") {
-    //   this.setState({
-    //   setAlignOrder: "row",
-    //   setHeadDisplays: "row list-header",
-    //   setDesignerDetails: "col-md-5 list-designers-details",
-    //   setDesignerImage: "col-md-5 list-designers-details",
-    //   setDesignerPrice: "col-md-2 designers-price"
-    //  });
-    // }
-
-    // if (this.state.mainClass === "col-md-12 list-view") {
-    //   this.setState({ setHeadDisplays: "row list-header" });
-    // }
-
-    // if (this.state.mainClass === "col-md-12 list-view") {
-    //   this.setState({ setDesignerDetails: "col-md-5 list-designers-details" });
-    // }
-
-    // if (this.state.mainClass === "col-md-12 list-view") {
-    //   this.setState({ setDesignerImage: "col-md-5 list-designers-details" });
-    // }
-
-    // if (this.state.mainClass === "col-md-12 list-view") {
-    //   this.setState({ setDesignerPrice: "col-md-2 designers-price" });
-    // }
-
-    var productslength = products.length;
-    // console.log(productslength, "jjj");
-
     return (
       <div className="ViewAllContent">
-        <div className="designers-header-filters">
-          <label>{productslength} items</label>
-          <button
-            className="btn btn-default"
-            onClick={() => {
-              this.setState({ mainClass: "col-md-12 list-view" });
-            }}
-          >
-            <i className="fas fa-list"></i>
-          </button>
-          <button
-            className="btn btn-default"
-            onClick={() => {
-              this.setState({ mainClass: "col-md-6 grid-view-large" });
-            }}
-          >
-            <i className="fas fa-th-large"></i>
-          </button>
-          <button
-            className="btn btn-default"
-            onClick={() => {
-              this.setState({ mainClass: "col-md-4 grid-view-small" });
-            }}
-          >
-            <i className="fas fa-th"></i>
-          </button>
-          <button className="btn btn-default add-to-wishlist">
-            ADD ALL TO WISHLIST
-          </button>
-          <select name="sort" onChange={this.onChangeSort}>
-            <option value="">Sort</option>
-            <option value="pricing.retail;asc" selected>
-              Price Low to High
-            </option>
-            <option value="pricing.retail;desc">Price High to Low</option>
-            <option value="company.optName;asc">Brands A to Z</option>
-            <option value="company.optName;desc">Brands Z to A</option>
-            <option value="attributes.brand_Collection;asc">
-              Collection A to Z
-            </option>
-            <option value="attributes.brand_Collection;desc">
-              Collection Z to A
-            </option>
-            <option value="opt.styleNumber;asc">Style # A to Z </option>
-            <option value="opt.styleNumber;desc">Style # Z to A </option>
-            <option value="categories.name;asc">Category A to Z</option>
-            <option value="categories.name;desc">Category Z to A</option>
-          </select>
-          <select name="limit" onChange={this.onChangeLimit}>
-            <option value="Items per page">Items per page</option>
-            <option value="24" selected>
-              24
-            </option>
-            <option value="48">48</option>
-            <option value="72">72</option>
-          </select>
+        <div className={filterCriteria}>
+          <p>
+            <strong>CURRENT SEARCH CRITERIA:</strong>
+          </p>
+          <span className={searchCriteria}>
+            {searching}
+            <button>X</button>
+          </span>
+          <span className={priceCriteria}>
+            $ {priceMin} - $ {priceMax} <button>X</button>{" "}
+          </span>
+          <span className={brandCriteria}>
+            {brands}
+            <button>X</button>
+          </span>
+          <span className={categoryCriteria}>
+            {category}
+            <button>X</button>
+          </span>
         </div>
         <div className={setHeadDisplays}>
           <div className="col-md-4"></div>
@@ -179,7 +107,6 @@ class ProductList extends React.Component {
                 <div className={setAlignOrder}>
                   <div className={setDesignerImage}>
                     <img src={designs.images} alt={designs.title}></img>
-                    <p>{designs.pricing.retail}</p>
                   </div>
                   <div className={setDesignerDetails}>
                     <p className="brand-name">
@@ -275,7 +202,13 @@ const mapStateToProps = state => {
     loading: state.loading,
     error: state.error,
     sorted: state.sorted,
-    limit: state.limit
+    limit: state.limit,
+    searching: state.searching,
+    priceMin: state.priceMin,
+    priceMax: state.priceMax,
+    brands: state.brands,
+    category: state.category,
+    mainClass: state.mainClass
   };
 };
 

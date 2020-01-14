@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ProductList from "./content/ProductList";
 import ProductFilter from './filter/ProductFilter';
+import  ViewAllHeader  from './content/ViewAllHeader';
 
 
 export class DesignersViewAll extends Component {
@@ -11,6 +12,7 @@ export class DesignersViewAll extends Component {
        <ProductFilter />
       </div>
       <div className="col-md-9 col-xs-12">
+        <ViewAllHeader /> 
         <ProductList />
       </div>
     </div>

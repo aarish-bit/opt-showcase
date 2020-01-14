@@ -2,7 +2,7 @@ import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
-  SORT_PRODUCTS
+  CHANGE_VIEW
 } from "./ViewAllAction";
 
 const initialState = {
@@ -10,7 +10,13 @@ const initialState = {
   loading: false,
   error: null,
   sorted: 'pricing.retail;asc',
-  limit: '24'
+  limit: '24',
+  searching: '',
+  priceMin: '',
+  priceMax: '',
+  brands: '',
+  category: '',
+  mainClass: "col-md-4 grid-view-small"
 };
 
 export default function productReducer(state = initialState, action) {
@@ -23,13 +29,17 @@ export default function productReducer(state = initialState, action) {
       };
 
     case FETCH_PRODUCTS_SUCCESS:
-      console.log('action',action.payload)
       return {
         ...state,
         loading: false,
         items: action.payload.products,
         sorted:action.payload.sortBy,
         limit:action.payload.Limit,
+        searching: action.payload.search,
+        priceMin: action.payload.minPrice,
+        priceMax: action.payload.maxPrice,
+        brands:action.payload.Brand,
+        category:action.payload.categories,
       };
 
     case FETCH_PRODUCTS_FAILURE:
@@ -39,6 +49,12 @@ export default function productReducer(state = initialState, action) {
         error: action.payload.error,
         items: []
       };
+    
+    case CHANGE_VIEW:
+      return {
+        ...state,
+          mainClass:action.payload.mainClass
+      }; 
     default:
       return state;
   }

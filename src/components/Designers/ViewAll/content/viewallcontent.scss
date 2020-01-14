@@ -195,6 +195,34 @@
   display: none;
 }
 
+.filter-criteria-show{
+  display: flex;
+  margin-top: 10px;
+  span{
+    background-color: #afafaf;
+    margin-left: 10px;
+    height: 100%;
+  }
+  button{
+    height: 22px;
+    width: 22px;
+    background: transparent;
+    border: none;
+  }
+}
+
+.search-criteria-show, .price-criteria-show, .brands-criteria-show, .category-criteria-show{
+  display: block;
+}
+
+.search-criteria-hide, .price-criteria-hide, .brands-criteria-hide, .category-criteria-hide{
+  display: none;
+}
+
+.filter-criteria-hide{
+  display: none;
+}
+
 .viewall-content-functions {
   border-top: 2px solid #afafaf;
   border-bottom: 2px solid #afafaf;

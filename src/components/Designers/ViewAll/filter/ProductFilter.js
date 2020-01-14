@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Collapse, CardBody, Card } from "reactstrap";
-import { fetchProducts} from "./../../../../ViewAllAction";
+import { fetchProducts } from "./../../../../ViewAllAction";
 import "./viewallfilter.scss";
 import _ from "lodash";
 
 class ProductFilter extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       isOpen1: false,
       isOpen2: false,
@@ -19,30 +19,70 @@ class ProductFilter extends React.Component {
     };
     this.handleShopByBrand = this.handleShopByBrand.bind(this);
     this.handleShopByCategories = this.handleShopByCategories.bind(this);
+    this.handleShopByName = this.handleShopByName.bind(this);
+    this.handleShopByPrice = this.handleShopByPrice.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchProducts());
   }
 
+  handleShopByName(e) {
+    var Searchtext = document.getElementById("searchBykeyword").value;
+    this.props.dispatch(
+      fetchProducts(this.props.sorted, this.props.limit, Searchtext)
+    );
+  }
+
+  handleShopByPrice(e) {
+    var maxPrice = document.getElementById("maximum").value;
+    var minPrice = document.getElementById("minimum").value;
+    this.props.dispatch(
+      fetchProducts(
+        this.props.sorted,
+        this.props.limit,
+        this.props.searching,
+        maxPrice,
+        minPrice
+      )
+    );
+  }
+
   handleShopByBrand(e) {
-    console.log(e.target.value)
-    // this.props.dispatch(fetchProducts(e.target.value, this.props.limit));
+    this.props.dispatch(
+      fetchProducts(
+        this.props.sorted,
+        this.props.limit,
+        this.props.searching,
+        this.props.priceMax,
+        this.props.priceMin,
+        e.target.textContent
+      )
+    );
   }
 
   handleShopByCategories(e) {
-    console.log(e.target.value)
-    // this.props.dispatch(fetchProducts(this.props.sorted, e.target.value));
+    this.props.dispatch(
+      fetchProducts(
+        this.props.sorted,
+        this.props.limit,
+        this.props.searching,
+        this.props.priceMax,
+        this.props.priceMin,
+        this.props.brands,
+        e.target.textContent
+      )
+    );
   }
 
   render() {
     var { isOpen1, isOpen2, isOpen3, isOpen4, isOpen5, isOpen6 } = this.state;
-    const { error, loading, products } = this.props;
+    const {products} = this.props
 
-    var brandsort = products.map((brands) => {
+    var brandsort = products.map(brands => {
       return brands.brand.name;
     });
-    var brandsorted = [... new Set(brandsort)]
+    var brandsorted = [...new Set(brandsort)];
 
     var categorysort = products.map(category => {
       return category.categories[0].name;
@@ -78,10 +118,14 @@ class ProductFilter extends React.Component {
           <span>
             <input
               type="text"
+              id="searchBykeyword"
               placeholder="enter search term(s)"
               className="name-block"
             />
-            <button className="btn btn-default name-btn">
+            <button
+              className="btn btn-default name-btn"
+              onClick={this.handleShopByName}
+            >
               <i className="fas fa-search"></i>
             </button>
           </span>
@@ -91,14 +135,29 @@ class ProductFilter extends React.Component {
           <div className="">
             <span className="col-md-1">$</span>
             <span className="col-md-4">
-              <input type="text" className="price-block" />
+              <input
+                type="text"
+                className="price-block"
+                id="minimum"
+                required
+              />
             </span>
             <span className="col-md-1">-$</span>
             <span className="col-md-4">
-              <input type="text" className="price-block" />
+              <input
+                type="text"
+                className="price-block"
+                id="maximum"
+                required
+              />
             </span>
             <span className="col-md-2">
-              <button className="btn btn-default">GO</button>
+              <button
+                className="btn btn-default"
+                onClick={this.handleShopByPrice}
+              >
+                GO
+              </button>
             </span>
           </div>
         </div>
@@ -118,13 +177,22 @@ class ProductFilter extends React.Component {
           <Collapse isOpen={isOpen1}>
             <Card>
               <CardBody>
-                {brandsorted.map((brands, key) => {
-                  return (
-                    <div key={brands.id} className="reset-filter">
-                      <span onClick={this.handleShopByBrand}>{brands}</span>
-                    </div>
-                  );
-                })}
+                <ul>
+                  {brandsorted.map((brands, key) => {
+                    // console.log("brandsss:", brands)
+                    return (
+                      <div className="reset-filter">
+                        <li
+                          key={brands.id}
+                          value={brands}
+                          onClick={this.handleShopByBrand}
+                        >
+                          {brands}
+                        </li>
+                      </div>
+                    );
+                  })}
+                </ul>
               </CardBody>
             </Card>
           </Collapse>
@@ -140,13 +208,21 @@ class ProductFilter extends React.Component {
           <Collapse isOpen={isOpen2}>
             <Card>
               <CardBody>
-                {categorysort.map((category, key) => {
-                  return (
-                    <div className="reset-filter">
-                      <span onChange={this.handleShopByCategories}>{category}</span>
-                    </div>
-                  );
-                })}
+                <ul>
+                  {categorysort.map((category, key) => {
+                    return (
+                      <div className="reset-filter">
+                        <li
+                          key={category.id}
+                          value={category}
+                          onClick={this.handleShopByCategories}
+                        >
+                          {category}
+                        </li>
+                      </div>
+                    );
+                  })}
+                </ul>
               </CardBody>
             </Card>
           </Collapse>
@@ -250,7 +326,12 @@ const mapStateToProps = state => {
     loading: state.loading,
     error: state.error,
     sorted: state.sorted,
-    limit: state.limit
+    limit: state.limit,
+    searching: state.searching,
+    priceMin: state.priceMin,
+    priceMax: state.priceMax,
+    brands: state.brands,
+    category: state.category
   };
 };
 
