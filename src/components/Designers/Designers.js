@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./designers.scss";
 import { NavLink } from "react-router-dom";
-import _ from 'lodash'
+// import _ from 'lodash'
 
 export default function Designers() {
-  const [hasError, setErrors] = useState(false);
+  // const [hasError, setErrors] = useState(false);
   const [designerFilter, setDesignFilter] = useState([]);
   // const [namesFilter, setNamesFilter] = useState([]);
 
@@ -15,19 +15,19 @@ export default function Designers() {
     res
       .json()
       .then(res => setDesignFilter(res))
-      .catch(err => setErrors(err));
+      // .catch(err => setErrors(err));
   }
 
   // console.log(designerFilter, 'm')
   designerFilter.sort((a,b) => (a.name > b.name) ? 1 : -1);
 
-  var namesFilter = designerFilter.map((names)=> { return names.name})
+  // var namesFilter = designerFilter.map((names)=> { return names.name})
   // console.log(namesFilter, 'vvv')
 
-  var firstLetter = namesFilter.map((letter) => { return letter.charAt(0) });
+  // var firstLetter = namesFilter.map((letter) => { return letter.charAt(0) });
   // console.log(firstLetter, 'kkk')
 
-  var filterletter = _.uniq(firstLetter);
+  // var filterletter = _.uniq(firstLetter);
   // console.log(filterletter, 'fff')
   
   useEffect(() => {

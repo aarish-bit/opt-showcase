@@ -2,20 +2,21 @@ import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
-  CHANGE_VIEW
+  CHANGE_VIEW,
+  FILTER_RESET
 } from "./ViewAllAction";
 
 const initialState = {
   items: [],
   loading: false,
   error: null,
-  sorted: 'pricing.retail;asc',
-  limit: '24',
-  searching: '',
-  priceMin: '',
-  priceMax: '',
-  brands: '',
-  category: '',
+  sorted: "pricing.retail;asc",
+  limit: "24",
+  searching: "",
+  priceMin: "",
+  priceMax: "",
+  brands: "",
+  category: "",
   mainClass: "col-md-4 grid-view-small"
 };
 
@@ -33,13 +34,13 @@ export default function productReducer(state = initialState, action) {
         ...state,
         loading: false,
         items: action.payload.products,
-        sorted:action.payload.sortBy,
-        limit:action.payload.Limit,
+        sorted: action.payload.sortBy,
+        limit: action.payload.Limit,
         searching: action.payload.search,
         priceMin: action.payload.minPrice,
         priceMax: action.payload.maxPrice,
-        brands:action.payload.Brand,
-        category:action.payload.categories,
+        brands: action.payload.Brand,
+        category: action.payload.categories
       };
 
     case FETCH_PRODUCTS_FAILURE:
@@ -49,12 +50,25 @@ export default function productReducer(state = initialState, action) {
         error: action.payload.error,
         items: []
       };
-    
+
     case CHANGE_VIEW:
       return {
         ...state,
-          mainClass:action.payload.mainClass
-      }; 
+        mainClass: action.payload.mainClass
+      };
+
+    case FILTER_RESET:
+      return {
+        ...state,
+        items: action.payload.products,
+        sorted: action.payload.sortBy,
+        limit: action.payload.Limit,
+        searching: action.payload.search,
+        priceMin: action.payload.minPrice,
+        priceMax: action.payload.maxPrice,
+        brands: action.payload.Brand,
+        category: action.payload.categories
+      };
     default:
       return state;
   }

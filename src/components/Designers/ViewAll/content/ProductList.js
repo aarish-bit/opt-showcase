@@ -1,14 +1,12 @@
 import React from "react";
 import "./viewallcontent.scss";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchProducts } from "./../../../../ViewAllAction";
-import _ from "lodash"
+import _ from "lodash";
+import  Pagination  from "./Pagination";
 
 class ProductList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.dispatch(
@@ -23,21 +21,20 @@ class ProductList extends React.Component {
     );
   }
 
+
+
   render() {
     const { error, loading, products, mainClass } = this.props;
     // console.log("products", products)
     const { searching, priceMin, priceMax, brands, category } = this.props;
-    console.log("brands", brands);
+    
+    var Criteria = [];
     var setAlignOrder = "column";
     var setHeadDisplays = "row list-header-hidden";
     var setDesignerDetails = "col-md-12 grid-designers-details";
     var setDesignerImage = "col-md-12 grid-designers-details";
     var setDesignerPrice = "col-md-12 grid-designers-details";
     var filterCriteria = "filter-criteria-hide";
-    var searchCriteria = "search-criteria-show";
-    var brandCriteria = "search-criteria-show";
-    var categoryCriteria = "search-criteria-show";
-    var priceCriteria = "search-criteria-show";
 
     if (this.props.mainClass === "col-md-12 list-view") {
       setAlignOrder = "row";
@@ -46,9 +43,28 @@ class ProductList extends React.Component {
       setDesignerImage = "col-md-5 list-designers-details";
       setDesignerPrice = "col-md-2 designers-price";
     }
-    if (!_.isEmpty(searching) || !_.isEmpty(priceMin) || !_.isEmpty(priceMax) || !_.isEmpty(brands) || !_.isEmpty(category)) {
+    if (
+      !_.isEmpty(searching) ||
+      !_.isEmpty(priceMin)  ||
+      !_.isEmpty(priceMax)  ||
+      !_.isEmpty(brands)    ||
+      !_.isEmpty(category)
+    ) {
       filterCriteria = "filter-criteria-show";
+      Criteria.push(searching, priceMin, priceMax, brands, category);
     }
+
+    var myFilterArray = Criteria.filter(Boolean);
+
+    // if (!_.isEmpty(searching)) {
+    //   searchCriteria = "search-criteria-show";
+    // }else if (!_.isEmpty(priceMin && priceMax)) {
+    //   priceCriteria = "price-criteria-show";
+    // }else if (!_.isEmpty(brands)) {
+    //   brandCriteria = "brand-criteria-show";
+    // }else if (!_.isEmpty(category)) {
+    //   categoryCriteria = "category-criteria-show";
+    // }
 
     if (error) {
       return <div>Error! {error.message}</div>;
@@ -56,6 +72,8 @@ class ProductList extends React.Component {
 
     if (loading) {
       return (
+        <div className="loading">
+        <div className="Fetching-products" >Fetching products, please wait...</div>
         <div class="lds-default">
           <div></div>
           <div></div>
@@ -70,31 +88,25 @@ class ProductList extends React.Component {
           <div></div>
           <div></div>
         </div>
+        </div>
       );
     }
 
     return (
       <div className="ViewAllContent">
-        <div className={filterCriteria}>
+        {/* <div className={filterCriteria}>
           <p>
             <strong>CURRENT SEARCH CRITERIA:</strong>
           </p>
-          <span className={searchCriteria}>
-            {searching}
-            <button>X</button>
-          </span>
-          <span className={priceCriteria}>
-            $ {priceMin} - $ {priceMax} <button>X</button>{" "}
-          </span>
-          <span className={brandCriteria}>
-            {brands}
-            <button>X</button>
-          </span>
-          <span className={categoryCriteria}>
-            {category}
-            <button>X</button>
-          </span>
-        </div>
+          <ul>
+            {myFilterArray.map((conditions, key) => {
+              return <li>
+              {conditions}
+              <button>x</button>
+              </li>
+            })}
+          </ul>
+        </div> */}
         <div className={setHeadDisplays}>
           <div className="col-md-4"></div>
           <div className="col-md-6">Details</div>
@@ -174,23 +186,7 @@ class ProductList extends React.Component {
             );
           })}
         </div>
-        <ul class="pagination">
-          <li>
-            <NavLink to="#">1</NavLink>
-          </li>
-          <li class="active">
-            <NavLink to="#">2</NavLink>
-          </li>
-          <li>
-            <NavLink to="#">3</NavLink>
-          </li>
-          <li>
-            <NavLink to="#">4</NavLink>
-          </li>
-          <li>
-            <NavLink to="#">5</NavLink>
-          </li>
-        </ul>
+        <Pagination />
       </div>
     );
   }

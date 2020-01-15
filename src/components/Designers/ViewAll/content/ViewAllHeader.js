@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./viewallcontent.scss";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchProducts, changeView } from "../../../../ViewAllAction";
 
@@ -14,29 +14,49 @@ export class ViewAllHeader extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchProducts(this.props.sorted, this.props.limit));
+    this.props.dispatch(
+      fetchProducts(
+        this.props.sorted,
+        this.props.limit,
+        this.props.searching,
+        this.props.priceMax,
+        this.props.priceMin,
+        this.props.brands,
+        this.props.category
+      )
+    );
   }
 
   onChangeSort(e) {
-    this.props.dispatch(fetchProducts(e.target.value, this.props.limit));
+    this.props.dispatch(
+      fetchProducts(
+        e.target.value,
+        this.props.limit,
+        this.props.searching,
+        this.props.priceMax,
+        this.props.priceMin,
+        this.props.brands,
+        this.props.category
+      )
+    );
   }
 
   onChangeLimit(e) {
-    this.props.dispatch(fetchProducts(this.props.sorted, e.target.value));
+    this.props.dispatch(
+      fetchProducts(
+        this.props.sorted,
+        e.target.value,
+        this.props.searching,
+        this.props.priceMax,
+        this.props.priceMin,
+        this.props.brands,
+        this.props.category
+      )
+    );
   }
 
   render() {
-    const { mainClass } = this.props;
-    let {
-      setAlignOrder,
-      setHeadDisplays,
-      setDesignerDetails,
-      setDesignerImage,
-      setDesignerPrice
-    } = this.state;
-
     var productslength = this.props.products.length;
-
 
     return (
       <div className="ViewAllContent">
@@ -105,8 +125,15 @@ export class ViewAllHeader extends Component {
 const mapStateToProps = state => {
   return {
     products: state.items,
+    loading: state.loading,
+    error: state.error,
     sorted: state.sorted,
     limit: state.limit,
+    searching: state.searching,
+    priceMin: state.priceMin,
+    priceMax: state.priceMax,
+    brands: state.brands,
+    category: state.category,
     mainClass: state.mainClass
   };
 };

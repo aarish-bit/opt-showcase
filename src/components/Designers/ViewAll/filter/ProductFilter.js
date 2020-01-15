@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Collapse, CardBody, Card } from "reactstrap";
-import { fetchProducts } from "./../../../../ViewAllAction";
+import { fetchProducts, filterReset } from "./../../../../ViewAllAction";
 import "./viewallfilter.scss";
-import _ from "lodash";
+// import _ from "lodash";
 
 class ProductFilter extends React.Component {
   constructor(props) {
@@ -21,16 +21,46 @@ class ProductFilter extends React.Component {
     this.handleShopByCategories = this.handleShopByCategories.bind(this);
     this.handleShopByName = this.handleShopByName.bind(this);
     this.handleShopByPrice = this.handleShopByPrice.bind(this);
+    // this.handleFilterReset = this.handleFilterReset.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(fetchProducts());
   }
 
+  // handleFilterReset() {
+  //   var sorted = "pricing.retail;asc";
+  //   var limit = "24";
+  //   var searching = "";
+  //   var priceMin = "";
+  //   var priceMax = "";
+  //   var brands = "";
+  //   var category = "";
+  //   this.props.dispatch(
+  //     filterReset(
+  //       sorted,
+  //       limit,
+  //       searching,
+  //       priceMin,
+  //       priceMax,
+  //       brands,
+  //       category
+  //     )
+  //   );
+  // }
+
   handleShopByName(e) {
     var Searchtext = document.getElementById("searchBykeyword").value;
     this.props.dispatch(
-      fetchProducts(this.props.sorted, this.props.limit, Searchtext)
+      fetchProducts(
+        this.props.sorted,
+        this.props.limit,
+        Searchtext,
+        this.props.priceMax,
+        this.props.priceMin,
+        this.props.brands,
+        this.props.category
+      )
     );
   }
 
@@ -43,7 +73,9 @@ class ProductFilter extends React.Component {
         this.props.limit,
         this.props.searching,
         maxPrice,
-        minPrice
+        minPrice,
+        this.props.brands,
+        this.props.category
       )
     );
   }
@@ -77,42 +109,44 @@ class ProductFilter extends React.Component {
 
   render() {
     var { isOpen1, isOpen2, isOpen3, isOpen4, isOpen5, isOpen6 } = this.state;
-    const {products} = this.props
+    const { products } = this.props;
 
     var brandsort = products.map(brands => {
       return brands.brand.name;
     });
     var brandsorted = [...new Set(brandsort)];
 
-    var categorysort = products.map(category => {
+    var categoriessort = products.map(category => {
       return category.categories[0].name;
     });
-    var categorysort = [...new Set(categorysort)];
+    var categorysort = [...new Set(categoriessort)];
 
-    var colorsort = products.map(color => {
+    var coloursort = products.map(color => {
       return color.attributes["Gemstone Color"];
     });
-    var colorsort = [...new Set(colorsort)];
+    var colorsort = [...new Set(coloursort)];
     // console.log(colorsort, 'color')
 
-    var stonesort = products.map(stone => {
+    var stoneesort = products.map(stone => {
       return stone.attributes["Gemstone Type"];
     });
-    var stonesort = [...new Set(stonesort)];
+    var stonesort = [...new Set(stoneesort)];
 
-    var metalsort = products.map(metal => {
+    var metallsort = products.map(metal => {
       return metal.attributes.Metal;
     });
-    var metalsort = [...new Set(metalsort)];
+    var metalsort = [...new Set(metallsort)];
 
-    var OOOsort = products.map(OOOtype => {
+    var OOOsortt = products.map(OOOtype => {
       return OOOtype.attributes["OOO Type"];
     });
-    var OOOsort = [...new Set(OOOsort)];
+    var OOOsort = [...new Set(OOOsortt)];
 
     return (
       <section className="ViewAllFilters">
-        <span className="reset-filter">RESET FILTER</span>
+        <span className="reset-filter" >
+          RESET FILTER
+        </span>
         <div className="shop-by-keyword">
           <label>SHOP BY KEYWORD</label>
           <span>
