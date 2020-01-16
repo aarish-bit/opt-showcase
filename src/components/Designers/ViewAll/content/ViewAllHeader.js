@@ -22,7 +22,8 @@ export class ViewAllHeader extends Component {
         this.props.priceMax,
         this.props.priceMin,
         this.props.brands,
-        this.props.category
+        this.props.category,
+        this.props.page
       )
     );
   }
@@ -36,7 +37,8 @@ export class ViewAllHeader extends Component {
         this.props.priceMax,
         this.props.priceMin,
         this.props.brands,
-        this.props.category
+        this.props.category,
+        this.props.page
       )
     );
   }
@@ -50,7 +52,8 @@ export class ViewAllHeader extends Component {
         this.props.priceMax,
         this.props.priceMin,
         this.props.brands,
-        this.props.category
+        this.props.category,
+        this.props.page
       )
     );
   }

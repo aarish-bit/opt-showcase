@@ -17,6 +17,8 @@ const initialState = {
   priceMax: "",
   brands: "",
   category: "",
+  page: 1,
+  total:'',
   mainClass: "col-md-4 grid-view-small"
 };
 
@@ -40,7 +42,9 @@ export default function productReducer(state = initialState, action) {
         priceMin: action.payload.minPrice,
         priceMax: action.payload.maxPrice,
         brands: action.payload.Brand,
-        category: action.payload.categories
+        category: action.payload.categories,
+        // page: action.payload.Page,
+        total: action.payload.totalCount,
       };
 
     case FETCH_PRODUCTS_FAILURE:
@@ -67,7 +71,8 @@ export default function productReducer(state = initialState, action) {
         priceMin: action.payload.minPrice,
         priceMax: action.payload.maxPrice,
         brands: action.payload.Brand,
-        category: action.payload.categories
+        category: action.payload.categories,
+        // page: action.payload.Page
       };
     default:
       return state;

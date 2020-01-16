@@ -360,11 +360,11 @@
 }
 
 .pagination {
-  display: block;
+  display: flex;
   text-align: center;
   margin-top: 30px;
 
-  span {
+  li {
     margin-left: 5px;
   }
 }

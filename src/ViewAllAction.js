@@ -2,6 +2,7 @@ export const FETCH_PRODUCTS_BEGIN = "FETCH_PRODUCTS_BEGIN";
 export const FETCH_PRODUCTS_SUCCESS = "FETCH_PRODUCTS_SUCCESS";
 export const FETCH_PRODUCTS_FAILURE = "FETCH_PRODUCTS_FAILURE";
 export const CHANGE_VIEW = "CHANGE_VIEW";
+export const NEXT_PAGE = "NEXT_PAGE";
 export const FILTER_RESET = "FILTER_RESET";
 
 export const fetchProductsBegin = () => ({
@@ -16,7 +17,7 @@ function handleErrors(response) {
 }
 
   
-export function fetchProducts(sortBy, Limit, search, maxPrice, minPrice, Brand, categories) {
+export function fetchProducts(sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page) {
   return dispatch => {
     dispatch(fetchProductsBegin());
     var query = fetch;
@@ -28,14 +29,14 @@ export function fetchProducts(sortBy, Limit, search, maxPrice, minPrice, Brand, 
     if (minPrice) qs = qs + "&price_min=" + minPrice;
     if (Brand) qs = qs + "&brands[0]=" + Brand;
     if (categories) qs = qs + "&categories[0]=" + categories;
-    // if (Page) qs = qs + "&Page=" + Page;
+    if (Page) qs = qs + "&page=" + Page;
     qs = sortBy === undefined && Limit === undefined? qs + "&sort=pricing.retail;asc&limit=24": qs;
 
     return query(qs)
       .then(handleErrors)
       .then(res => res.json())
       .then(res => {
-        dispatch(fetchProductsSuccess(res.data, sortBy, Limit, search, maxPrice, minPrice, Brand, categories));
+        dispatch(fetchProductsSuccess(res.data, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page, res.totalCount));
         return res.data;
       })
       .catch(error => dispatch(fetchProductsFailure(error)));  
@@ -43,9 +44,9 @@ export function fetchProducts(sortBy, Limit, search, maxPrice, minPrice, Brand, 
 }
 
   
-export const fetchProductsSuccess = (products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories) => ({
+export const fetchProductsSuccess = (products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page, totalCount) => ({
   type: FETCH_PRODUCTS_SUCCESS,
-  payload: { products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories }
+  payload: { products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page, totalCount }
 });
 
 export const fetchProductsFailure = error => ({
@@ -59,8 +60,14 @@ export const changeView = (mainClass) => ({
   payload:{mainClass}
 })
 
-export const filterReset = (products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories) => ({
-  type: FILTER_RESET,
-  payload: { products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories }
-});
+// export const NextPage = (products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page) => ({
+//   type: NEXT_PAGE,
+//   payload: { products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page }
+// });
+
+
+// export const filterReset = (products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page) => ({
+//   type: FILTER_RESET,
+//   payload: { products, sortBy, Limit, search, maxPrice, minPrice, Brand, categories, Page }
+// });
 

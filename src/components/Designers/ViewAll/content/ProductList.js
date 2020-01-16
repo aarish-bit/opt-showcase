@@ -16,7 +16,9 @@ class ProductList extends React.Component {
         this.props.searching,
         this.props.priceMax,
         this.props.priceMin,
-        this.props.brands
+        this.props.brands,
+        this.props.category,
+        this.props.page
       )
     );
   }
@@ -25,7 +27,6 @@ class ProductList extends React.Component {
 
   render() {
     const { error, loading, products, mainClass } = this.props;
-    // console.log("products", products)
     const { searching, priceMin, priceMax, brands, category } = this.props;
     
     var Criteria = [];

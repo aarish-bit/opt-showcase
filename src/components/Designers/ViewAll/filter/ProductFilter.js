@@ -59,7 +59,8 @@ class ProductFilter extends React.Component {
         this.props.priceMax,
         this.props.priceMin,
         this.props.brands,
-        this.props.category
+        this.props.category,
+        this.props.page
       )
     );
   }
@@ -75,7 +76,8 @@ class ProductFilter extends React.Component {
         maxPrice,
         minPrice,
         this.props.brands,
-        this.props.category
+        this.props.category,
+        this.props.page
       )
     );
   }
@@ -88,7 +90,10 @@ class ProductFilter extends React.Component {
         this.props.searching,
         this.props.priceMax,
         this.props.priceMin,
-        e.target.textContent
+        e.target.textContent,
+        this.props.category,
+        this.props.page
+
       )
     );
   }
@@ -102,7 +107,8 @@ class ProductFilter extends React.Component {
         this.props.priceMax,
         this.props.priceMin,
         this.props.brands,
-        e.target.textContent
+        e.target.textContent,
+        this.props.page
       )
     );
   }
@@ -144,7 +150,7 @@ class ProductFilter extends React.Component {
 
     return (
       <section className="ViewAllFilters">
-        <span className="reset-filter" >
+        <span className="reset-filter"  >
           RESET FILTER
         </span>
         <div className="shop-by-keyword">
